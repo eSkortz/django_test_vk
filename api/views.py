@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
@@ -168,7 +167,7 @@ class MyView(viewsets.ViewSet):
             return Response(data={'success': 'Выход выполнен успешно'}, status=200)
         else:
             # Если метод запроса не POST, возвращаем ошибку
-            return JsonResponse(data={'error': 'Неверный метод запроса'}, status=405)
+            return Response(data={'error': 'Неверный метод запроса'}, status=405)
         
     # Функция отправки заявки в друзья
     @login_required
