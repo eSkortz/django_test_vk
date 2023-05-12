@@ -281,6 +281,11 @@ info:
             examples:
               application/json:
                 error: У вас уже есть активная заявка с этим пользователем
+          402:
+            description: Заявка самому себе
+            examples:
+              application/json:
+                error: Вы не можете отправить заявку самому себе
           405:
             description: Метод не разрешен
             examples:
