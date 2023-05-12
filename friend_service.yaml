@@ -1,0 +1,329 @@
+openapi: 3.0.0
+info: 
+  title: API Documentation 
+  description: API для сервиса друзей
+  version: v1.0.0
+  host: 127.0.0.1:8000 
+  schemes: http 
+  basePath: /
+  consumes: application/json 
+  produces: application/json
+  paths: 
+    /accept_friend_request/:
+      post:
+        operationId: Функция для принятия заявки в друзья от пользователя
+        description: Эта функция используется для принятия заявки в друзья от пользователя, требует авторизации
+        parameters:
+          - name: data
+            in: body
+            required: true
+            schema:
+              required:
+                - friend_id
+              type: object
+              properties:
+                friend_id:
+                  type: string
+        responses:
+          200:
+            description: Заявка принята
+            examples:
+              application/json:
+                success: Заявка успешно принята
+          400:
+            description: Пользователь не существует
+            examples:
+              application/json:
+                error: Такого пользователя не существует
+          401:
+            description: Заявка отстуствует
+            examples:
+              application/json:
+                error: У вас нет активных заявок от этого пользователя
+          405:
+            description: Метод не разрешен
+            examples:
+              application/json:
+                error: Неверный метод запроса
+        tags:
+          - Функция принятия заявки
+    /get_friend_requests/:
+      post:
+        operationId: Функция для просмотра списка исходящих и входящих заявок в друзья
+        description: Эта функция используется для списка заявок в друзья пользователя, требует авторизации
+        parameters: []
+        responses:
+          200:
+            description: Список заявок получен
+            examples:
+              application/json: 
+                incoming_requests: incoming_list, 
+                outgoing_requests: outgoing_list
+          405:
+            description: Метод не разрешен
+            examples:
+              application/json: 
+                error: Неверный метод запроса
+        tags:
+          - Функция просмотра списка заявок
+    /get_friends/:
+      post:
+        operationId: Функция для просмотра списка друзей пользователя
+        description: Эта функция используется для списка друзей пользователя, требует авторизации
+        parameters: []
+        responses:
+          200:
+            description: Список друзей получен
+            examples:
+              application/json: 
+                friends: friend_list
+          405:
+            description: Метод не разрешен
+            examples:
+              application/json: 
+                error: Неверный метод запроса
+        tags:
+          - Функция просмотра списка друзей
+    /login_user/:
+      post:
+        operationId: Функция для авторизации пользователя
+        description: Эта функция используется для авторизации пользователя и принимает на вход два значения: логин и пароль
+        parameters:
+          - name: data
+            in: body
+            required: true
+            schema:
+              required:
+                - username
+                - password
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+        responses:
+          200:
+            description: Успешная авторизация
+            examples:
+              application/json:
+                success: Авторизация прошла успешно
+          400:
+            description: Некорректные данные авторизации
+            examples:
+              application/json:
+                error: Неверный логин или пароль
+          405:
+            description: Метод не разрешен
+            examples:
+              application/json:
+                error: Неверный метод запроса
+        tags:
+          - Функция входа
+    /logout_user/:
+      post:
+        operationId: Функция для выхода из системы
+        description: Эта функция используется для выхода из системы и не принимает входных параметров
+        parameters: []
+        responses:
+          200:
+            description: Успешный выход
+            examples:
+              application/json: 
+                success: Выход выполнен успешно
+          405:
+            description: Метод не разрешен
+            examples:
+              application/json: 
+                error: Неверный метод запроса
+        tags:
+          - Функция выхода
+    /register_user/:
+      post:
+        operationId: Функция для регистрации пользователя
+        description: Эта функция используется для регистрации пользователя и принимает на вход два значения - логин и пароль
+        parameters:
+          - name: data
+            in: body
+            required: true
+            schema:
+              required:
+                - username
+                - password
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+        responses:
+          200:
+            description: Успешная регистрация
+            examples:
+              application/json:
+                success: Пользователь зарегистрирован успешно
+          400:
+            description: Некорректные данные для регистрации
+            examples:
+              application/json:
+                error: Такой пользователь уже существует
+          405:
+            description: Метод не разрешен
+            examples:
+              application/json:
+                error: Неверный метод запроса
+        tags:
+          - Функция регистрации
+    /reject_friend_request/:
+      post:
+        operationId: Функция для отклонения заявки в друзья от пользователя
+        description: Эта функция используется для отклонения заявки в друзья от пользователя, требует авторизации
+        parameters:
+          - name: data
+            in: body
+            required: true
+            schema:
+              required:
+                - friend_id
+              type: object
+              properties:
+                friend_id:
+                  type: string
+        responses:
+          200:
+            description: Заявка отклонена
+            examples:
+              application/json:
+                success: Заявка успешно отклонена
+          400:
+            description: Пользователь не существует
+            examples:
+              application/json:
+                error: Такого пользователя не существует
+          401:
+            description: Заявка отстуствует
+            examples:
+              application/json:
+                error: У вас нет активных заявок от этого пользователя
+          405:
+            description: Метод не разрешен
+            examples:
+              application/json:
+                error: Неверный метод запроса
+        tags:
+          - Функция отклонения заявки
+    /remove_friend/:
+      post:
+        operationId: Функция для удаления пользователя из друзей
+        description: Эта функция используется для удаления пользователя из друзей, требует авторизации
+        parameters:
+          - name: data
+            in: body
+            required: true
+            schema:
+              required:
+                - friend_id
+              type: object
+              properties:
+                friend_id:
+                  type: string
+        responses:
+          200:
+            description: Пользователь удален
+            examples:
+              application/json:
+                success: Пользователь успешно удален из друзей
+          400:
+            description: Пользователь не существует
+            examples:
+              application/json:
+                error: Такого пользователя не существует
+          401:
+            description: Нет заявок
+            examples:
+              application/json:
+                error: У вас нет заявок с этим пользователем
+          405:
+            description: Метод не разрешен
+            examples:
+              application/json:
+                error: Неверный метод запроса
+        tags:
+          - Функция удаления друга
+    /send_friend_request/:
+      post:
+        operationId: Функция для отправки заявки в друзья пользователю
+        description: Эта функция используется для отправки запроса в друзья другому пользователю, требует быть авторизованным
+        parameters:
+          - name: data
+            in: body
+            required: true
+            schema:
+              required:
+                - to_user_id
+              type: object
+              properties:
+                to_user_id:
+                  type: string
+        responses:
+          200:
+            description: Успешная отправка заявки
+            examples:
+              application/json:
+                success: Запрос дружбы успешно отправлен
+          400:
+            description: Пользователь не существует
+            examples:
+              application/json:
+                error: Такого пользователя не существует
+          401:
+            description: Заявка уже отправлена
+            examples:
+              application/json:
+                error: У вас уже есть активная заявка с этим пользователем
+          405:
+            description: Метод не разрешен
+            examples:
+              application/json:
+                error: Неверный метод запроса
+        tags:
+          - Функция отправки заявки
+    /view_friend_status/:
+      post:
+        operationId: Функция для просмотра статуса дружбы с пользователем
+        description: Эта функция используется для статуса дружбы с пользователем, требует авторизации
+        parameters:
+          - name: data
+            in: body
+            required: true
+            schema:
+              required:
+                - friend_id
+              type: object
+              properties:
+                friend_id:
+                  type: string
+        responses:
+          200:
+            description: Статус дружбы
+            examples:
+              application/json:
+                friend: id
+                status: status
+          400:
+            description: Пользователь не существует
+            examples:
+              application/json:
+                error: Такого пользователя не существует
+          401:
+            description: Заявка отстуствует
+            examples:
+              application/json:
+                error: У вас нет заявок с этим пользователем
+          405:
+            description: Метод не разрешен
+            examples:
+              application/json:
+                error: Неверный метод запроса
+        tags:
+          - Функция просмотра статуса дружбы
